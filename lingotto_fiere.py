@@ -163,17 +163,16 @@ class LingottoFiere:
         """Stampa l'elenco degli espositori mostrando, per ognuno, lo stand a cui è associato, quando applicabile """
         # TODO
         for riga in self.espositori.values(): #riga è un oggetto Espositori
-            stand_trovato = False
+            stand_trovato = None
 
             for line in self.stand.values(): #line è un oggetto Stand
                 if riga == line.espositore: #line.espositore è un oggetto Espositore grazie all'assegnazione fatta nella funzione prima
-                    stand_trovato = True
-                    stand_assegnato = line
+                    stand_trovato = line
                     break
 
 
             if stand_trovato is not None:
-                print(f"{riga} - Stand: {stand_assegnato.codice_stand}")
+                print(f"{riga} - Stand: {stand_trovato.codice_stand}")
             else:
                 print(f"{riga} - Nessuno stand associato")
 

@@ -103,7 +103,7 @@ class LingottoFiere:
     def carica_file_dati(self, file_path):
         """Carica i dati (stand ed espositori) dal file"""
         # TODO
-        with open(file_path) as infile:
+        with open(file_path, "r", encoding="Utf-8") as infile:
             reader = csv.reader(infile)
             for line in reader:
                 if line[0].startswith('E'):
@@ -144,8 +144,8 @@ class LingottoFiere:
         if codice_espositore not in self.espositori:
             raise Exception(f"Espositore: {codice_espositore} non trovato")
 
-        stand = self.codice_stand
-        espositore = self.espositori
+        stand = self.stand[codice_stand]
+        espositore = self.espositori[codice_espositore]
 
         if stand.disponibile == False:
             raise Exception("Stand già assegnato")
@@ -162,7 +162,20 @@ class LingottoFiere:
     def elenca_espositori(self):
         """Stampa l'elenco degli espositori mostrando, per ognuno, lo stand a cui è associato, quando applicabile """
         # TODO
+        for riga in self.espositori.values(): #riga è un oggetto Espositori
+            stand_trovato = False
 
+            for line in self.stand.values(): #line è un oggetto Stand
+                if riga == line.espositore: #line.espositore è un oggetto Espositore grazie all'assegnazione fatta nella funzione prima
+                    stand_trovato = True
+                    stand_assegnato = line
+                    break
+
+
+            if stand_trovato is not None:
+                print(f"{riga} - Stand: {stand_assegnato.codice_stand}")
+            else:
+                print(f"{riga} - Nessuno stand associato")
 
     def stand_ordinati_per_prezzo(self):
         """Restituisce la lista ordinata degli stand in base al prezzo"""

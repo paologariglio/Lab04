@@ -59,6 +59,9 @@ class Stand:
     def disponibile(self,disponibile):
         self.__disponibile = disponibile
 
+    def __lt__(self, other):
+        return self.prezzo < other.prezzo
+
     def __str__(self):
         return f"{self.__codice_stand}, {self.superficie}, {self.padiglione}, {self.prezzo}"
 
@@ -114,21 +117,21 @@ class LingottoFiere:
                     self.espositori[codice_espositore] = espositore
                 if line[0].startswith('S') and len(line)<5:
                     codice_stand = line[0]
-                    superficie = line[1]
+                    superficie = float(line[1])
                     padiglione = line[2]
-                    prezzo = line[3]
+                    prezzo = float(line[3])
                     stand = Stand(codice_stand, superficie, padiglione, prezzo)
                     self.stand[codice_stand] = stand
                 if line[0].startswith('S') and len(line)==5:
                     codice_stand = line[0]
-                    superficie = line[1]
+                    superficie = float(line[1])
                     padiglione = line[2]
-                    prezzo = line[3]
+                    prezzo = float(line[3])
                     valore = line[4]
                     if valore.isdigit():
                         prese = int(valore)
-                        premium = Premium(codice_stand, superficie, padiglione, prezzo, prese)
-                        self.stand[codice_stand] = premium
+                        stand_prese = Prese(codice_stand, superficie, padiglione, prezzo, prese)
+                        self.stand[codice_stand] = stand_prese
                     else:
                         posizione = valore
                         premium = Premium(codice_stand, superficie, padiglione, prezzo, posizione)
@@ -179,3 +182,4 @@ class LingottoFiere:
     def stand_ordinati_per_prezzo(self):
         """Restituisce la lista ordinata degli stand in base al prezzo"""
         # TODO
+        return sorted(self.stand.values())

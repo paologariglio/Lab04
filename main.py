@@ -20,6 +20,9 @@ def main():
         if scelta == "1":
             nuovo_nome = input("Inserisci il nuovo nome del centro fieristico: ")
             # TODO: Aggiorna il nome del centro fieristico
+            lingotto.nome = nuovo_nome #richiamiamo l'attributo dell'oggetto e lo modifichiamo grazie a setter
+            print(f"Nome aggiornato come: {lingotto.nome}")
+
 
         elif scelta == "2":
             file_path = "dati_lingotto.csv"
